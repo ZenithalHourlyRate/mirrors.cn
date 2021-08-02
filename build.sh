@@ -15,13 +15,17 @@ cd ../
 
 ## render legacy page for each province
 rm -rf dist && mkdir -p dist
-for province in {bj,sh}; do
+for province in {bj,tj,sh,cq,he,ha,sx,nm,ln,jl,hl,js,zj,ah,fj,jx,sd,hb,hn,gd,gx,hi,sc,gz,yn,xz,sn,gs,qh,nx,xj,tw,hk,mo}; do
   echo Building for $province
-  cp list/$province/mirrors.js mirrorz/src/config/mirrors.js
-  cd mirrorz && yarn legacy_build && cd ../
-  cp -r mirrorz/dist dist/$province
-  cp dist/$province/_/index.html dist/$province/index.html
-  rm -r mirrorz/dist/_/
+  if [ -e list/$province ]; then
+    cp list/$province/mirrors.js mirrorz/src/config/mirrors.js
+    cd mirrorz && yarn legacy_build && cd ../
+    cp -r mirrorz/dist dist/$province
+    cp dist/$province/_/index.html dist/$province/index.html
+    rm -r mirrorz/dist/_/
+  else
+    ln -s ../dist dist/$province
+  fi
 done
 
 # restore mirrorz and build for mirrors-cn.pages.dev
