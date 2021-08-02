@@ -1,5 +1,5 @@
 const fs = require('fs');
-const list = require('./mirrors');
+const list = require('./meta');
 
 MAP = {}
 
@@ -23,6 +23,16 @@ async function generate() {
       if (err) throw err;
     });
   }
+
+  fallback = []
+  for (pr in MAP) {
+    fallback = fallback.concat(MAP[pr])
+  }
+  c = "module.exports =\n" + JSON.stringify(fallback, null, 2);
+  await fs.writeFile("mirrors.js", c, (err) => {
+    if (err) throw err;
+  });
+
 }
 
 generate()

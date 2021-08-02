@@ -1,6 +1,6 @@
 module.exports = {
   "https://mirrorz.org/static/json/legacy/tuna.json"            :"bj",
-  "https://mirrorz.org/static/json/legacy/opentuna.json"        :"  ",
+  "https://mirrorz.org/static/json/legacy/opentuna.json"        :"nx",
   "https://mirrorz.org/static/json/legacy/bfsu.json"            :"bj",
   "https://mirrors.ustc.edu.cn/static/json/mirrorz.json"        :"ah",
   "https://mirror.sjtu.edu.cn/mirrorz/siyuan.json"              :"sh",

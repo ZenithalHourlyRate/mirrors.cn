@@ -3,7 +3,6 @@
 set -e
 
 ## build mirrorz
-git submodule update --init --recursive
 cd mirrorz
 if ! command -v yarn; then
   # Yes, CF pages builder does not have `yarn`
@@ -12,6 +11,9 @@ fi
 yarn --frozen-lockfile
 yarn build
 cd ../
+
+## render list
+cd list && node generate.js && cd ..
 
 ## render legacy page for each province
 rm -rf dist && mkdir -p dist
@@ -28,7 +30,11 @@ for province in {bj,tj,sh,cq,he,ha,sx,nm,ln,jl,hl,js,zj,ah,fj,jx,sd,hb,hn,gd,gx,
   fi
 done
 
-# restore mirrorz and build for mirrors-cn.pages.dev
-cd mirrorz && git reset --hard && yarn legacy_build && cd ..
+# build for mirrors-cn.pages.dev and some mirrors.pr.cn that has no mirrors
+cp list/mirrors.js mirrorz/src/config/mirrors.js
+cd mirrorz && yarn legacy_build && cd ../
 cp -r mirrorz/dist/* dist
 cp dist/_/index.html dist/index.html
+
+# cleanup
+cd mirrorz && git reset --hard && cd ..
