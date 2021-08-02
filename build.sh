@@ -3,10 +3,18 @@
 set -e
 
 ## build mirrorz
-cd mirrorz && yarn --frozen-lockfile && yarn build && cd ../
+git submodule update --init --recursive
+cd mirrorz
+if ! command -v yarn; then
+  # Yes, CF pages builder does not have `yarn`
+  npm install --global yarn
+fi
+yarn --frozen-lockfile
+yarn build
+cd ../
 
 ## render legacy page for each province
-rm -r dist && mkdir -p dist
+rm -rf dist && mkdir -p dist
 for province in {bj,sh}; do
   echo Building for $province
   cp list/$province/mirrors.js mirrorz/src/config/mirrors.js
