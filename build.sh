@@ -2,6 +2,35 @@
 
 set -e
 
+github_remote="https://github.com/"
+if [ "$1" == "git" ]; then
+  github_remote="git@github.com:"
+fi
+
+## prepare mirrorz
+if [ ! -e mirrorz/static/json/legacy ]; then
+  git clone ${github_remote}mirrorz-org/mirrorz-json-legacy.git mirrorz/static/json/json-legacy
+  mv mirrorz/static/json/json-legacy/data mirrorz/static/json/legacy
+  rm -rf mirrorz/static/json/json-legacy
+fi
+if [ ! -e mirrorz/static/json/site ]; then
+  git clone ${github_remote}mirrorz-org/mirrorz-json-site.git mirrorz/static/json/site
+fi
+
+if [ ! -e mirrorz/src/parser ] && [ ! -e mirrorz/src/config ]; then
+  git clone ${github_remote}mirrorz-org/mirrorz-parser.git mirrorz/src/parser
+  git clone ${github_remote}mirrorz-org/mirrorz-config.git mirrorz/src/config
+  ln -s config/mirrorz.org.json mirrorz/src/config/config.json
+  ln -s ../config/config.json mirrorz/src/parser/config.json
+fi
+
+if [ ! -e mirrorz/legacy ]; then
+  git clone ${github_remote}mirrorz-org/mirrorz-legacy.git mirrorz/legacy
+  ln -s ../ mirrorz/legacy/mirrorz
+  ln -s ../src/config/config.json mirrorz/legacy/config.json
+  ln -s ../static/json/legacy mirrorz/legacy/json-legacy
+fi
+
 ## build mirrorz
 cd mirrorz
 if ! command -v yarn; then
@@ -9,7 +38,11 @@ if ! command -v yarn; then
   npm install --global yarn
 fi
 yarn --frozen-lockfile
+cd legacy
+yarn --frozen-lockfile
+cd ..
 yarn build
+unlink src/config/config.json
 cd ../
 
 ## generate mirrors list
@@ -23,14 +56,14 @@ function render() {
   ## $1 and no $2: render for province with its own conf
   ## $1 '' and $2: render for province with global conf
 
-  cp list/${1}mirrors.js mirrorz/src/config/mirrors.js
+  cp list/${1}config.json mirrorz/src/config/config.json
   cd mirrorz && yarn legacy_build && cd ../
   if [ "$#" -lt 1 ]; then
     cp -r mirrorz/dist/* dist
   else
     cp -r mirrorz/dist dist/${1}${2}
   fi
-  cp dist/${1}${2}_/index.html dist/${1}${2}index.html
+  cp dist/${1}${2}_/about/index.html dist/${1}${2}index.html
   rm -r mirrorz/dist/_/
 }
 

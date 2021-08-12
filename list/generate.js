@@ -5,11 +5,21 @@ MAP = {}
 
 async function generate() {
   for (url in list) {
-    if (list[url] != "  ") {
-      if (!(list[url] in MAP))
-        MAP[list[url]] = [url];
+    let pr = "  ";
+    if (url.startsWith("https"))
+      pr = list[url][1]
+    else
+      pr = list[url]
+    if (pr != "  ") {
+      let c = null
+      if (url.startsWith("https"))
+        c = [url, list[url][0]]
       else
-        MAP[list[url]].push(url);
+        c = url
+      if (!(pr in MAP))
+        MAP[pr] = [c];
+      else
+        MAP[pr].push(c);
     }
   }
 
@@ -17,9 +27,23 @@ async function generate() {
     await fs.mkdir(pr, {recursive: true}, (err) => {
       if (err) throw err;
     })
-    c = "module.exports =\n" + JSON.stringify(MAP[pr], null, 2);
-    console.log(pr, JSON.stringify(MAP[pr]))
-    await fs.writeFile(pr + "/mirrors.js", c, (err) => {
+    let j = {
+      url: `https://mirrors.${pr}.cn`,
+      about: [
+        "legacy",
+      ],
+      mirrors_legacy: [],
+      mirrors: {},
+    }
+    for (c of MAP[pr]) {
+      if (typeof(c) === "string")
+        j.mirrors_legacy.push(c)
+      else
+        j.mirrors[c[0]] = c[1]
+    }
+    config = JSON.stringify(j, null, 2);
+    console.log(pr, JSON.stringify(j))
+    await fs.writeFile(pr + "/config.json", config, (err) => {
       if (err) throw err;
     });
   }
@@ -28,8 +52,22 @@ async function generate() {
   for (pr in MAP) {
     fallback = fallback.concat(MAP[pr])
   }
-  c = "module.exports =\n" + JSON.stringify(fallback, null, 2);
-  await fs.writeFile("mirrors.js", c, (err) => {
+  let j = {
+    url: `https://mirrors-cn.pages.dev`,
+    about: [
+      "legacy",
+    ],
+    mirrors_legacy: [],
+    mirrors: {},
+  }
+  for (c of fallback) {
+    if (typeof(c) === "string")
+      j.mirrors_legacy.push(c)
+    else
+      j.mirrors[c[0]] = c[1]
+  }
+  config = JSON.stringify(j, null, 2);
+  await fs.writeFile("config.json", config, (err) => {
     if (err) throw err;
   });
 
