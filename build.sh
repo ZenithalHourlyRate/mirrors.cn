@@ -43,7 +43,7 @@ yarn --frozen-lockfile
 cd ..
 yarn build
 unlink src/config/config.json
-sed -i 's/15000/1000/' legacy/generate.js
+sed -i 's/15000/1000/' legacy/generator.js
 cd ../
 
 ## generate mirrors list
