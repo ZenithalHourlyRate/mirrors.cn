@@ -17,14 +17,17 @@ if [ ! -e mirrorz/static/json/site ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-json-site.git mirrorz/static/json/site
 fi
 
-if [ ! -e mirrorz/src/parser ] && [ ! -e mirrorz/src/config ]; then
-  git clone ${github_remote}mirrorz-org/mirrorz-parser.git mirrorz/src/parser
+if [ ! -e mirrorz/src/config ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-config.git mirrorz/src/config
   ln -s config/mirrorz.org.json mirrorz/src/config/config.json
+fi
+if [ ! -e mirrorz/src/parser ]; then
+  git clone ${github_remote}mirrorz-org/mirrorz-parser.git mirrorz/src/parser
   ln -s ../config/config.json mirrorz/src/parser/config.json
 fi
 if [ ! -e mirrorz/src/i18n ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-i18n.git mirrorz/src/i18n
+  ln -s ../config/config.json mirrorz/src/i18n/config.json
 fi
 
 if [ ! -e mirrorz/legacy ]; then
