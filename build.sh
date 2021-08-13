@@ -23,11 +23,15 @@ if [ ! -e mirrorz/src/parser ] && [ ! -e mirrorz/src/config ]; then
   ln -s config/mirrorz.org.json mirrorz/src/config/config.json
   ln -s ../config/config.json mirrorz/src/parser/config.json
 fi
+if [ ! -e mirrorz/src/i18n ]; then
+  git clone ${github_remote}mirrorz-org/mirrorz-i18n.git mirrorz/src/i18n
+fi
 
 if [ ! -e mirrorz/legacy ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-legacy.git mirrorz/legacy
   ln -s ../ mirrorz/legacy/mirrorz
   ln -s ../src/config/config.json mirrorz/legacy/config.json
+  ln -s ../src/i18n mirrorz/legacy/i18n
   ln -s ../static/json/legacy mirrorz/legacy/json-legacy
 fi
 

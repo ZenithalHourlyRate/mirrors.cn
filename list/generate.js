@@ -29,6 +29,8 @@ async function generate() {
     })
     let j = {
       url: `https://mirrors.${pr}.cn`,
+      display_legacy: `mirrors.${pr}.cn`,
+      language: "zh",
       about: [
         "legacy",
       ],
@@ -54,6 +56,8 @@ async function generate() {
   }
   let j = {
     url: `https://mirrors-cn.pages.dev`,
+    display_legacy: `mirrors-cn.pages.dev`,
+    language: "zh",
     about: [
       "legacy",
     ],
