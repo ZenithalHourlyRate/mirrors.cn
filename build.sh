@@ -19,7 +19,7 @@ fi
 
 if [ ! -e mirrorz/src/config ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-config.git mirrorz/src/config
-  ln -s config/mirrorz.org.json mirrorz/src/config/config.json
+  # prepare mirrorz/src/config/config.json later
 fi
 if [ ! -e mirrorz/src/parser ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-parser.git mirrorz/src/parser
@@ -38,6 +38,10 @@ if [ ! -e mirrorz/legacy ]; then
   ln -s ../static/json/legacy mirrorz/legacy/json-legacy
 fi
 
+## generate mirrors list
+cd list && node generate.js && cd ..
+cp list/config.json mirrorz/src/config/config.json
+
 ## build mirrorz
 cd mirrorz
 if ! command -v yarn; then
@@ -49,42 +53,36 @@ cd legacy
 yarn --frozen-lockfile
 cd ..
 yarn build
-unlink src/config/config.json
 cd ../
 
-## generate mirrors list
-cd list && node generate.js && cd ..
+## cleanup
+rm -rf dist
+
+## render mirrors-cn.pages.dev
+cd mirrorz && yarn legacy_build && cd ../
+cp -r mirrorz/dist dist
+cp dist/_/about/index.html dist/index.html
+cp -r dist mirrors-cn
 
 ## render legacy page for each province
-rm -rf dist && mkdir -p dist
-
 function render() {
-  ## no $1 nor $2: render for webroot
-  ## $1 and no $2: render for province with its own conf
-  ## $1 '' and $2: render for province with global conf
+  ## $1: render for province with its own conf
 
-  cp list/${1}config.json mirrorz/src/config/config.json
-  cd mirrorz && yarn legacy_build && cd ../
-  if [ "$#" -lt 1 ]; then
-    cp -r mirrorz/dist/* dist
-  else
-    cp -r mirrorz/dist dist/${1}${2}
-  fi
-  cp dist/${1}${2}_/about/index.html dist/${1}${2}index.html
   rm -r mirrorz/dist/_/
+  cp list/${1}/config.json mirrorz/src/config/config.json
+  cd mirrorz && yarn legacy_build && cd ../
+  cp -r mirrorz/dist dist/${1}
+  cp dist/${1}/_/about/index.html dist/${1}/index.html
 }
 
 for province in {bj,tj,sh,cq,he,ha,sx,nm,ln,jl,hl,js,zj,ah,fj,jx,sd,hb,hn,gd,gx,hi,sc,gz,yn,xz,sn,gs,qh,nx,xj,tw,hk,mo}; do
   echo Building for $province
   if [ -e list/$province ]; then
-    render $province/
+    render $province
   else
-    render '' $province/
+    cp -r mirrors-cn dist/$province
   fi
 done
-
-# build for mirrors-cn.pages.dev
-render
 
 # cleanup
 cd mirrorz && git reset --hard && cd ..
