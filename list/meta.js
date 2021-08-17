@@ -26,7 +26,7 @@ module.exports = {
   "xtom-de"         :"  ",
   "xtom-nl"         :"  ",
   "xtom-ee"         :"  ",
-  "https://mirrors.wsyu.edu.cn/.mirrorz/mirrorz.json"    :["wsyu"    ,"hb"],
+  "wsyu"            :"hb",
   "https://mirrors.ustc.edu.cn/static/json/mirrorz.json" :["ustc"    ,"ah"],
   "https://mirror.sjtu.edu.cn/mirrorz/siyuan.json"       :["siyuan"  ,"sh"],
   "https://mirror.sjtu.edu.cn/mirrorz/zhiyuan.json"      :["zhiyuan" ,"sh"],
