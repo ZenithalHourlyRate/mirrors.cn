@@ -34,6 +34,11 @@ async function generate() {
       about: [
         "legacy",
       ],
+      meta: {
+        "og:description": `Mirror sites in ${pr}`,
+        "description": `Mirror sites in ${pr}`,
+        "keywords": "mirrorz,mirrors,mirror,mirror site,linux,open source"
+      },
       mirrors_legacy: [],
       mirrors: {},
     }
@@ -58,6 +63,11 @@ async function generate() {
     url: `https://mirrors-cn.pages.dev`,
     display_legacy: `mirrors-cn.pages.dev`,
     language: "zh",
+    meta: {
+      "og:description": `Mirror sites in cn`,
+      "description": `Mirror sites in cn`,
+      "keywords": "mirrorz,mirrors,mirror,mirror site,linux,open source"
+    },
     about: [
       "legacy",
     ],
