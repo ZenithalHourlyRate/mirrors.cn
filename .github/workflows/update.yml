@@ -15,4 +15,4 @@ jobs:
         run: |
           A=$(curl -s https://mirrorz.org/version   | grep json_legacy | cut -d ' ' -f 2)
           B=$(curl -s https://mirrors.bj.cn/version | grep json_legacy | cut -d ' ' -f 2)
-          [ "$A" != "$B" ] && curl -X POST https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${CF_TRIGGER}
+          [ "$A" != "$B" ] && curl -X POST https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${CF_TRIGGER} || echo Equal!
