@@ -1,0 +1,24 @@
+name: Update legacy json
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 15 * * *"
+
+jobs: 
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Trigger build if there is any change
+        run: |
+          git config user.name "Mirrors.xx.cn Bot"
+          git config user.email "bot@mirrors.bj.cn"
+          A=$(curl -s https://mirrorz.org/version   | grep json_legacy | cut -d ' ' -f 2)
+          B=$(curl -s https://mirrors.bj.cn/version | grep json_legacy | cut -d ' ' -f 2)
+          [ "$A" != "$B" ] && git commit --allow-empty -m "Trigger build: From $B to $A"
+      - name: Push to master
+        run: |
+          git push
