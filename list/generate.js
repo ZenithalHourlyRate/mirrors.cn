@@ -43,7 +43,7 @@ async function generate() {
       if (typeof(c) === "string")
         j.mirrors_legacy.push(c)
       else
-        j.mirrors[c[0]] = c[1]
+        j.mirrors[c[1]] = c[0]
     }
     config = JSON.stringify(j, null, 2);
     console.log(pr, JSON.stringify(j))
@@ -78,7 +78,7 @@ async function generate() {
     if (typeof(c) === "string")
       j.mirrors_legacy.push(c)
     else
-      j.mirrors[c[0]] = c[1]
+      j.mirrors[c[1]] = c[0]
   }
   config = JSON.stringify(j, null, 2);
   await fs.writeFile("config.json", config, (err) => {
