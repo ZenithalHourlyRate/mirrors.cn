@@ -5,7 +5,7 @@ on:
   schedule:
     - cron: "0 15 * * *"
 
-jobs: 
+jobs:
   update:
     runs-on: ubuntu-latest
     steps:
@@ -13,12 +13,11 @@ jobs:
         with:
           submodules: true
       - name: Trigger build if there is any change
+        env:
+          CF_TRIGGER: ${{ secrets.CF_TRIGGER }}
         run: |
           git config user.name "Mirrors.xx.cn Bot"
           git config user.email "bot@mirrors.bj.cn"
           A=$(curl -s https://mirrorz.org/version   | grep json_legacy | cut -d ' ' -f 2)
           B=$(curl -s https://mirrors.bj.cn/version | grep json_legacy | cut -d ' ' -f 2)
-          [ "$A" != "$B" ] && git commit --allow-empty -m "Trigger build: From $B to $A"
-      - name: Push to master
-        run: |
-          git push
+          [ "$A" != "$B" ] && curl -X POST https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${CF_TRIGGER}
