@@ -24,9 +24,6 @@ async function generate() {
   }
 
   for (pr in MAP) {
-    await fs.mkdir(pr, {recursive: true}, (err) => {
-      if (err) throw err;
-    })
     let j = {
       url: `https://mirrors.${pr}.cn`,
       display_legacy: `mirrors.${pr}.cn`,
@@ -50,7 +47,10 @@ async function generate() {
     }
     config = JSON.stringify(j, null, 2);
     console.log(pr, JSON.stringify(j))
-    await fs.writeFile(pr + "/config.json", config, (err) => {
+    fs.mkdirSync(pr, {recursive: true}, (err) => {
+      if (err) throw err;
+    });
+    fs.writeFileSync(pr + "/config.json", config, (err) => {
       if (err) throw err;
     });
   }
