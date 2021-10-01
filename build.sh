@@ -23,19 +23,13 @@ if [ ! -e mirrorz/src/config ]; then
 fi
 if [ ! -e mirrorz/src/parser ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-parser.git mirrorz/src/parser
-  ln -s ../config/config.json mirrorz/src/parser/config.json
 fi
 if [ ! -e mirrorz/src/i18n ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-i18n.git mirrorz/src/i18n
-  ln -s ../config/config.json mirrorz/src/i18n/config.json
 fi
 
 if [ ! -e mirrorz/legacy ]; then
   git clone ${github_remote}mirrorz-org/mirrorz-legacy.git mirrorz/legacy
-  ln -s ../ mirrorz/legacy/mirrorz
-  ln -s ../src/config/config.json mirrorz/legacy/config.json
-  ln -s ../src/i18n mirrorz/legacy/i18n
-  ln -s ../static/json/legacy mirrorz/legacy/json-legacy
 fi
 
 ## generate mirrors list
@@ -48,6 +42,10 @@ if ! command -v yarn; then
   # Yes, CF pages builder does not have `yarn`
   npm install --global yarn
 fi
+### prepare env
+yarn other_ln
+yarn legacy_env
+### prepare dep
 yarn --frozen-lockfile
 cd legacy
 yarn --frozen-lockfile
