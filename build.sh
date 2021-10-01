@@ -62,7 +62,6 @@ rm -rf dist
 cd mirrorz && yarn legacy_build && cd ../
 cp -r mirrorz/dist dist
 cp dist/_/about/index.html dist/index.html
-cp -r dist mirrors-cn
 
 ## render legacy page for each province
 function render() {
@@ -80,7 +79,9 @@ for province in {bj,tj,sh,cq,he,ha,sx,nm,ln,jl,hl,js,zj,ah,fj,jx,sd,hb,hn,gd,gx,
   if [ -e list/$province ]; then
     render $province
   else
-    cp -r mirrors-cn dist/$province
+    mkdir -p dist/$province
+    # frontend redirection to mirrors-cn.pages.dev
+    cp index.html dist/$province/
   fi
 done
 
