@@ -33,4 +33,5 @@ module.exports = {
   "https://mirrors.dgut.edu.cn/static/mirrorz.json"      :["dgut"    ,"gd"],
   "https://mirrors.sustech.edu.cn/mirrorz/mirrorz.json"  :["sustech" ,"gd"],
   "https://mirrors.nwafu.edu.cn/api/mirrorz/info.json"   :["nwafu"   ,"sn"],
+  "https://mirror.iscas.ac.cn/.mirrorz/mirrorz.json"     :["iscas"   ,"bj"],
 }
