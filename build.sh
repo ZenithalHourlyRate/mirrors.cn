@@ -51,6 +51,7 @@ cd legacy
 yarn --frozen-lockfile
 cd ..
 yarn build
+rm -rf dist/static/json
 cd ../
 
 ## cleanup
