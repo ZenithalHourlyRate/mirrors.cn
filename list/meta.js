@@ -17,6 +17,7 @@ module.exports = {
   "scau"            :"gd",
   "zju"             :"zj",
   "pku"             :"bj",
+  "bupt"            :"bj",
   "byrio"           :"bj",
   "cqupt"           :"cq",
   "ynuosa"          :"yn",
