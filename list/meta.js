@@ -15,7 +15,6 @@ module.exports = {
   "neu"             :"ln",
   "nyist"           :"ha",
   "scau"            :"gd",
-  "zju"             :"zj",
   "pku"             :"bj",
   "bupt"            :"bj",
   "byrio"           :"bj",
@@ -37,4 +36,5 @@ module.exports = {
   "https://mirrors.sustech.edu.cn/mirrorz/mirrorz.json"  :["sustech" ,"gd"],
   "https://mirrors.nwafu.edu.cn/api/mirrorz/info.json"   :["nwafu"   ,"sn"],
   "https://mirror.iscas.ac.cn/.mirrorz/mirrorz.json"     :["iscas"   ,"bj"],
+  "https://mirrors.zju.edu.cn/api/mirrorz.json"          :["zju"     ,"zj"],
 }
