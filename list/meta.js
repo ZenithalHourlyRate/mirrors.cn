@@ -14,7 +14,6 @@ module.exports = {
   "lzu"             :"gs",
   "neu"             :"ln",
   "nyist"           :"ha",
-  "scau"            :"gd",
   "pku"             :"bj",
   "bupt"            :"bj",
   "byrio"           :"bj",
@@ -38,4 +37,5 @@ module.exports = {
   "https://mirrors.nwafu.edu.cn/api/mirrorz/info.json"     :["nwafu"   ,"sn"],
   "https://mirror.iscas.ac.cn/.mirrorz/mirrorz.json"       :["iscas"   ,"bj"],
   "https://mirrors.zju.edu.cn/api/mirrorz.json"            :["zju"     ,"zj"],
+  "https://mirrors.scau.edu.cn/mirrorz.d.json"             :["scau"    ,"gd"],
 }
