@@ -28,6 +28,7 @@ module.exports = {
   "sdu"             :"sd",
   "xidian"          :"sn",
   "njtech"          :"js",
+  "geekpie"         :"sh",
   "https://mirrors.ustc.edu.cn/static/json/mirrorz.json"   :["ustc"    ,"ah"],
   "https://mirror.sjtu.edu.cn/mirrorz/siyuan.json"         :["siyuan"  ,"sh"],
   "https://mirrors.sjtug.sjtu.edu.cn/mirrorz/zhiyuan.json" :["zhiyuan" ,"sh"],
