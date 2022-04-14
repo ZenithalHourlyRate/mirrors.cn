@@ -13,7 +13,6 @@ module.exports = {
   "neusoft"         :"ln",
   "lzu"             :"gs",
   "neu"             :"ln",
-  "nyist"           :"ha",
   "pku"             :"bj",
   "bupt"            :"bj",
   "byrio"           :"bj",
@@ -38,4 +37,5 @@ module.exports = {
   "https://mirror.iscas.ac.cn/.mirrorz/mirrorz.json"       :["iscas"   ,"bj"],
   "https://mirrors.zju.edu.cn/api/mirrorz.json"            :["zju"     ,"zj"],
   "https://mirrors.scau.edu.cn/mirrorz.d.json"             :["scau"    ,"gd"],
+  "https://mirror.nyist.edu.cn/mirrorz.json"               :["nyist"   ,"ha"],
 }
